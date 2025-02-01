@@ -26,5 +26,27 @@ root.resizable(False, False)
 root.attributes('-topmost', 1)
 root.iconbitmap('./img/kipi.ico')
 
+# este script debe crear una ventana que permita programar el tiempo de apagado en minutos o cancelar alguna
+# programación ya realizada
+from subprocess import run
 
+
+#ans = run("shutdown /s /t 3600",  shell = True, capture_output = True)
+
+ans = run("shutdown /a",  shell = True, capture_output = True)
+
+print("retorno de run ", ans)
+print("tipo del retorno de run ", type(ans))
+print("return code:",ans.returncode)
+print("return stderr:",ans.stderr)
+
+#el codigo de exito en cualquier caso es 0. los mensajes de exito son vacíos ''
+
+## error cuando queres programar el apagado pero ya programaste uno anterior
+## codigo de error: 1190
+## mesaje de error: b'Ya se program\xa2 un cierre del sistema.(1190)\n'
+
+## error cuando queres cancelar el tiempo de apagado pero no hay ningun tiempo programado
+## codigo de error: 1116
+## mesaje de error: b'No se puede anular el apagado del sistema porque no se estaba apagando.(1116)\n'
 root.mainloop()
